@@ -1,15 +1,14 @@
 import React from "react"
-import { useParams, Link, NavLink, Outlet, useLoaderData  } from "react-router-dom"
+import { useParams, Link, NavLink, Outlet, useLoaderData } from "react-router-dom"
 import { getHostVans } from "../../api"
+import { requireAuth } from "../../utils"
 
-
-export function loader({ params }) {
+export async function loader({ params }) {
+    await requireAuth()
     return getHostVans(params.id)
 }
 
 export default function HostVanDetail() {
-    const { id } = useParams()
-   
     const currentVan = useLoaderData()
 
     const activeStyles = {
@@ -17,7 +16,6 @@ export default function HostVanDetail() {
         textDecoration: "underline",
         color: "#161616"
     }
-
 
     return (
         <section>
